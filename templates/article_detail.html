@@ -14,9 +14,11 @@
     {{ article.body }}
   </div>
 
+  {% if article.author.pk == request.user.pk %}
   <div class="card-footer text-center text-muted">
     <a href={{article.get_absolute_url}}edit>Edit</a> | <a href={{article.get_absolute_url}}delete>Delete</a>
   </div>
+  {% endif %}
 
 
 
