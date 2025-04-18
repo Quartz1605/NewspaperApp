@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load crispy_forms_tags %}
 
 {% block title %}Articles{% endblock title %}
 
@@ -16,13 +17,27 @@
 
   <div class="card-body">
     {{ article.body }}
+    {% if article.author.pk == request.user.pk %}
+
+    <a href={{article.get_absolute_url}}edit>Edit</a> | <a href={{article.get_absolute_url}}delete>Delete</a>
+
+    {% endif %}
+
   </div>
 
-  {% if article.author.pk == request.user.pk %}
-  <div class="card-footer text-center text-muted">
-    <a href={{article.get_absolute_url}}edit>Edit</a> | <a href={{article.get_absolute_url}}delete>Delete</a>
-  </div>
-  {% endif %}
+  <div class="card-footer">
+    {% for comment in article.comment_set.all %}
+    <p>
+      <span class="fw-bold">
+        {{ comment.author }}&middot;
+      </span>
+      {{ comment }}
+    </p>
+    {% endfor %}
+
+    <a href={{article.get_absolute_url}}> + New Comment</a>
+
+
 
 
 
